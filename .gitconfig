@@ -1,0 +1,9 @@
+[user]
+	email = Andrew.Hou@emc.com
+	name = Andrew Hou
+[url "https://anhou@github.com"]
+	insteadOf = https://github.com
+[credential]
+	helper = cache --timeout=28800
+[core]
+	editor = vim

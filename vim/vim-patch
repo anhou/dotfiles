@@ -1,0 +1,218 @@
+--- vimrc.txt	2016-09-20 03:33:03.198256556 -0400
++++ _vimrc	2016-09-20 03:32:50.742256810 -0400
+@@ -20,33 +20,20 @@
+ " and for plugins that are filetype specific.
+ filetype indent plugin on
+ 
+-" Enable syntax highlighting
+-syntax on
+-
+-
+ "------------------------------------------------------------
+ " Must have options {{{1
+ "
+ " These are highly recommended options.
+ 
+-" Vim with default settings does not allow easy switching between multiple files
+-" in the same editor window. Users can use multiple split windows or multiple
+-" tab pages to edit multiple files, but it is still best to enable an option to
+-" allow easier switching between files.
+-"
+-" One such option is the 'hidden' option, which allows you to re-use the same
+-" window and switch from an unsaved buffer without saving it first. Also allows
+-" you to keep an undo history for multiple files when re-using the same window
+-" in this way. Note that using persistent undo also lets you undo in multiple
+-" files even in the same window, but is less efficient and is actually designed
+-" for keeping undo history after closing Vim entirely. Vim will complain if you
+-" try to quit without saving, and swap files will keep you safe if your computer
+-" crashes.
++" One of the most important options to activate. Allows you to switch from an
++" unsaved buffer without saving it first. Also allows you to keep an undo
++" history for multiple files. Vim will complain if you try to quit without
++" saving, and swap files will keep you safe if your computer crashes.
+ set hidden
+ 
+ " Note that not everyone likes working this way (with the hidden option).
+ " Alternatives include using tabs or split windows instead of re-using the same
+-" window as mentioned above, and/or either of the following options:
++" window for multiple buffers, and/or:
+ " set confirm
+ " set autowriteall
+ 
+@@ -65,6 +52,9 @@
+ " script, <http://www.vim.org/scripts/script.php?script_id=1876>.
+ " set nomodeline
+ 
++" Enable syntax highlighting
++syntax enable
++syntax on
+ 
+ "------------------------------------------------------------
+ " Usability options {{{1
+@@ -92,7 +82,7 @@
+ 
+ " Display the cursor position on the last line of the screen or in the status
+ " line of a window
+-set ruler
++"set ruler
+ 
+ " Always display the status line, even if only one window is displayed
+ set laststatus=2
+@@ -110,39 +100,40 @@
+ set t_vb=
+ 
+ " Enable use of the mouse for all modes
+-set mouse=a
++set mouse=v
+ 
+ " Set the command window height to 2 lines, to avoid many cases of having to
+ " "press <Enter> to continue"
+-set cmdheight=2
++"set cmdheight=2
+ 
+ " Display line numbers on the left
+-set number
++"set number
+ 
+ " Quickly time out on keycodes, but never time out on mappings
+ set notimeout ttimeout ttimeoutlen=200
+ 
+ " Use <F11> to toggle between 'paste' and 'nopaste'
+ set pastetoggle=<F11>
+-
++"
++" set paste
+ 
+ "------------------------------------------------------------
+ " Indentation options {{{1
+ "
+ " Indentation settings according to personal preference.
+ 
+-" Indentation settings for using 4 spaces instead of tabs.
++" Indentation settings for using 2 spaces instead of tabs.
+ " Do not change 'tabstop' from its default value of 8 with this setup.
+ set shiftwidth=4
+-set softtabstop=4
++set tabstop=4
+ set expandtab
+ 
+ " Indentation settings for using hard tabs for indent. Display tabs as
+-" four characters wide.
+-"set shiftwidth=4
+-"set tabstop=4
+-
++" two characters wide.
++"set shiftwidth=2
++"set tabstop=2
+ 
++set viminfo='20,<1000,s10,h
+ "------------------------------------------------------------
+ " Mappings {{{1
+ "
+@@ -158,3 +149,106 @@
+ 
+ 
+ "------------------------------------------------------------
++
++nmap <F9> :TlistToggle<CR>
++let Tlist_GainFocus_On_ToggleOpen = 1
++
++
++"-----------------------------------------------------------
++" Map NERDTree Window to right most
++"let g:NERDTreeWinPos = "right"
++" Open NERDTree automatically when vim starts up
++"autocmd vimenter * NERDTree
++"close vim if the only window left open is NERDTree
++"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
++"Using F8 to open/close NERDTree
++"map <F10> :NERDTreeToggle<CR>
++
++"---------------------------------------------------------
++" Set color scheme 
++"colo molokai 
++" syntax reset to hightlight the C/C++ keywords
++syntax reset
++
++"---------------------------------------------------------
++" Enable snipMate
++filetype plugin on
++
++autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
++
++"set foldmethod=indent 
++" colorscheme desert
++
++set nocompatible              " be iMproved, required
++filetype off                  " required
++
++" set the runtime path to include Vundle and initialize
++set rtp+=~/.vim/bundle/Vundle.vim
++call vundle#begin()
++" alternatively, pass a path where Vundle should install plugins
++"call vundle#begin('~/some/path/here')
++
++" let Vundle manage Vundle, required
++Plugin 'gmarik/Vundle.vim'
++
++" The following are examples of different formats supported.
++" Keep Plugin commands between vundle#begin/end.
++" plugin on GitHub repo
++Plugin 'tpope/vim-fugitive'
++" plugin from http://vim-scripts.org/vim/scripts.html
++Plugin 'L9'
++" Git plugin not hosted on GitHub
++" Plugin 'git://git.wincent.com/command-t.git'
++" git repos on your local machine (i.e. when working on your own plugin)
++" Plugin 'file:///home/gmarik/path/to/plugin'
++" The sparkup vim script is in a subdirectory of this repo called vim.
++" Pass the path to set the runtimepath properly.
++Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
++" Avoid a name conflict with L9
++"Plugin 'user/L9', {'name': 'newL9'}
++Plugin 'DrawIt'
++
++Plugin 'MarcWeber/vim-addon-mw-utils'
++Plugin 'tomtom/tlib_vim'
++Plugin 'garbas/vim-snipmate'
++Plugin 'honza/vim-snippets'
++
++Plugin 'scrooloose/syntastic'
++"Plugin 'Valloric/YouCompleteMe'
++"Plugin 'git://github.com/Valloric/YouCompleteMe.git'
++Plugin 'https://github.com/Valloric/YouCompleteMe.git'
++Plugin 'marijnh/tern_for_vim'
++Plugin 'Raimondi/delimitMate'
++
++Plugin 'godlygeek/tabular.git'
++Plugin 'guileen/vim-node-dict'
++" Plugin 'myhere/vim-nodejs-complete'
++Plugin 'ahayman/vim-nodejs-complete'
++Plugin 'moll/vim-node'
++
++Plugin 'powerman/vim-plugin-AnsiEsc'
++
++Plugin 'vim-scripts/taglist.vim'
++Plugin 'scrooloose/nerdtree'
++Plugin 'ggreer/the_silver_searcher'
++Plugin 'rking/ag.vim'
++"Plugin 'bronson/vim-trailing-whitespace'
++Plugin 'ntpeters/vim-better-whitespace'
++
++Plugin 'anhou/vim-rackhd-log'
++" All of your Plugins must be added before the following line
++call vundle#end()            " required
++filetype plugin indent on    " required
++" To ignore plugin indent changes, instead use:
++"filetype plugin on
++"
++" Brief help
++" :PluginList       - lists configured plugins
++" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
++" :PluginSearch foo - searches for foo; append `!` to refresh local cache
++" :PluginClean      - confirms removal of unused plugins; append `!` to
++"auto-approve removal
++"
++" see :h vundle for more details or wiki for FAQ
++" Put your non-Plugin stuff after this line
++
